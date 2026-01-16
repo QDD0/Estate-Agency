@@ -5,6 +5,71 @@
     <title>Title</title>
 </head>
 <body>
+<form method="post" th:action="@{/people}" th:object="${person}">
+    <p><b>firstname: </b>
+        <input type="text" th:field="*{firstname}">
+        <span th:if="${#fields.hasErrors('firstname')}"
+              th:errors="*{firstname}"
+              style="color: red;"></span>
+    </p>
 
+    <p><b>surname: </b>
+        <input type="text" th:field="*{surname}">
+        <span th:if="${#fields.hasErrors('surname')}"
+              th:errors="*{surname}"
+              style="color: red;"></span>
+    </p>
+
+    <p><b>lastname: </b>
+        <input type="text" th:field="*{lastname}">
+        <span th:if="${#fields.hasErrors('lastname')}"
+              th:errors="*{lastname}"
+              style="color: red;"></span>
+    </p>
+    <p><b>birthdate: </b>
+        <input type="date" th:field="*{birthdate}">
+        <span th:if="${#fields.hasErrors('birthdate')}"
+              th:errors="*{birthdate}"
+              style="color: red;"></span>
+    </p>
+
+    <p><b>passportseries: </b>
+        <input type="text" th:field="*{passportseries}">
+        <span th:if="${#fields.hasErrors('passportseries')}"
+              th:errors="*{passportseries}"
+              style="color: red;"></span>
+    </p>
+
+    <p><b>passportnumber: </b>
+        <input type="text" th:field="*{passportnumber}">
+        <span th:if="${#fields.hasErrors('passportnumber')}"
+              th:errors="*{passportnumber}"
+              style="color: red;"></span>
+    </p>
+
+    <p><b>phone: </b>
+        <input type="text" th:field="*{phone}">
+        <span th:if="${#fields.hasErrors('phone')}"
+              th:errors="*{phone}"
+              style="color: red;"></span>
+    </p>
+
+    <p><b>country: </b>
+        <input type="text" th:field="*{country}">
+        <span th:if="${#fields.hasErrors('country')}"
+              th:errors="*{country}"
+              style="color: red;"></span>
+    </p>
+
+    <p><b>city: </b>
+        <input type="text" th:field="*{city}">
+        <span th:if="${#fields.hasErrors('city')}"
+              th:errors="*{city}"
+              style="color: red;"></span>
+    </p>
+
+    <button type="submit">Сохранить</button>
+</form>
+<a th:href="@{/people}">Вернуться назад</a>
 </body>
 </html>

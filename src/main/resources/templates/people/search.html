@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Результаты поиска</h2>
+
+<a th:href="@{/people(page=${currentPage ?: 1})}">← Назад к списку</a>
+<hr>
+
+<div th:if="${people.isEmpty()}">
+    Ничего не найдено
+</div>
+
+<div th:each="person : ${people}">
+    <a th:href="@{/people/search/{id}(id=${person.id_person}, page=${currentPage})}">
+        <p><b>Имя:</b> <span th:text="${person.firstname}"></span></p>
+        <p><b>Фамилия:</b> <span th:text="${person.surname}"></span></p>
+        <p><b>Отчество:</b> <span th:text="${person.lastname}"></span></p>
+        <p><b>Дата рождения:</b> <span th:text="${person.birthdate}"></span></p>
+        <p><b>Серия паспорта:</b> <span th:text="${person.passportseries}"></span></p>
+        <p><b>Номер паспорта:</b> <span th:text="${person.passportnumber}"></span></p>
+        <p><b>Телефон:</b> <span th:text="${person.phone}"></span></p>
+        <p><b>Страна:</b> <span th:text="${person.country}"></span></p>
+        <p><b>Город:</b> <span th:text="${person.city}"></span></p>
+    </a>
+    <hr>
+</div>
+
+</body>
+</html>

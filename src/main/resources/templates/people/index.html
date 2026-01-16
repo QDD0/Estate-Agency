@@ -5,6 +5,13 @@
     <title>Main Page</title>
 </head>
 <body>
+<a th:href="@{/people/new}">Создать</a>
+<hr>
+<form th:action="@{people/search}" method="get">
+    <input type="text" name="query" placeholder="Введите имя или фамилию">
+    <button type="submit">Найти</button>
+</form>
+
 <div th:each="person : ${people}">
     <a th:href="@{/people/{id}(id=${person.id_person}, page=${currentPage})}">
         <span th:text="${person.firstname}"></span><br>

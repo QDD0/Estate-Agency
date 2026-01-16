@@ -23,5 +23,9 @@
 <hr>
 
 <a th:href="@{/people(page=${currentPage ?: 1})}">← Назад к списку</a>
+
+<form method="post" th:action="@{/people/{id}/delete(id=${person.id_person})}">
+    <button type="submit">Удалить</button>
+</form>
 </body>
 </html>

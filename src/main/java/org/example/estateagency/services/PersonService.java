@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.example.estateagency.repositories.PersonRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
