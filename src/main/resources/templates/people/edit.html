@@ -5,6 +5,28 @@
     <title>Title</title>
 </head>
 <body>
+<form method="post" th:action="@{/people/{id}(id=${person.id_person})}" th:object="${person}">
+    <label>first name</label>
+    <input type="text" th:field="*{firstname}"><br>
+    <label>surname</label>
+    <input type="text" th:field="*{surname}"><br>
+    <label>lastname</label>
+    <input type="text" th:field="*{lastname}"><br>
+    <label>birthdate</label>
+    <input type="date" th:field="*{birthdate}"><br>
+    <label>passportnumber</label>
+    <input type="text" th:field="*{passportnumber}"><br>
+    <label>passportseries</label>
+    <input type="text" th:field="*{passportseries}"><br>
+    <label>phone</label>
+    <input type="text" th:field="*{phone}"><br>
+    <label>country</label>
+    <input type="text" th:field="*{country}"><br>
+    <label>city</label>
+    <input type="text" th:field="*{city}"><br>
 
+    <button type="submit">Сохранить</button>
+</form>
+<a th:href="@{/people}">Вернуться назад</a>
 </body>
 </html>

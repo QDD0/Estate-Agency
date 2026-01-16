@@ -21,11 +21,13 @@
 </div>
 
 <hr>
-
-<a th:href="@{/people(page=${currentPage ?: 1})}">← Назад к списку</a>
+<a th:href="@{/people/{id}/edit(id=${person.id_person})}">Редактировать</a>
 
 <form method="post" th:action="@{/people/{id}/delete(id=${person.id_person})}">
     <button type="submit">Удалить</button>
 </form>
+
+<a th:href="@{/people(page=${currentPage ?: 1})}">← Назад к списку</a>
+
 </body>
 </html>
