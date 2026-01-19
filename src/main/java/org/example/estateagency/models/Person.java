@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -56,4 +57,7 @@ public class Person {
     @Column(name = "city")
     @NotBlank(message = "Заполните поле")
     private String city;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Agencies> agencies;
 }

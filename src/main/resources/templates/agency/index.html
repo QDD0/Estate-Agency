@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a th:href="@{/agency}">Создать</a>
+<hr>
+<div th:each="agency : ${agencies}">
+    <a th:href="@{agency/{id}(id=${agency.id_agency}, page=${currentPage})} ">
+        <span th:text="${agency.name}"></span><br>
+        <span th:text="${agency.phone}"></span><br>
+        <span th:text="${agency.email}"></span><br>
+        <span th:text="${agency.country}"></span><br>
+        <span th:text="${agency.city}"></span><br>
+    </a> <br>
+</div>
+
+<div>
+    <a th:if="${currentPage > 0}"
+       th:href="@{/agency(page=${currentPage - 1}, size=10)}">
+        ⬅ Предыдущая
+    </a>
+
+    <span th:text="${currentPage + 1}"></span> /
+    <span th:text="${totalPages}"></span>
+
+    <a th:if="${currentPage + 1 < totalPages}"
+       th:href="@{/agency(page=${currentPage + 1}, size=10)}">
+        Следующая ➡
+    </a>
+</div>
+</body>
+</html>
