@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${agency.name}"></title>
+</head>
+<body>
+<form method="post" th:action="@{/agency/{id}(id=${agency.id_agency})}" th:object="${agency}">
+    <input type="text" th:field="*{name}"><br>
+    <input type="text" th:field="*{country}"><br>
+    <input type="text" th:field="*{city}"><br>
+    <input type="text" th:field="*{phone}"><br>
+    <input type="text" th:field="*{email}"><br>
+
+    <select th:field="*{owner.id_person}">
+        <option value="">Выбор</option>
+        <option th:each="people : ${person}"
+                th:value="${people.id_person}"
+                th:text="${people.firstname} + ' ' + ${people.surname} + ' ' + ${people.lastname} + ' '">
+        </option>
+    </select> <br>
+
+    <button type="submit">Сохранить</button><br>
+</form>
+<a th:href="@{/agency}">Вернуться назад</a>
+</body>
+</html>

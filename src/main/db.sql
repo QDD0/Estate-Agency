@@ -21,14 +21,14 @@ CREATE TABLE agencies
     city      VARCHAR NOT NULL,
     phone     VARCHAR NOT NULL,
     email     VARCHAR NOT NULL,
-    ownerId   INTEGER NOT NULL REFERENCES person (id_person)
+    ownerId   INTEGER REFERENCES person (id_person)
 );
 
 CREATE TABLE realtors
 (
     id_realtor SERIAL PRIMARY KEY,
-    personId   INTEGER NOT NULL REFERENCES person (id_person),
-    agencyId   INTEGER NOT NULL REFERENCES agencies (id_agency)
+    personId   INTEGER REFERENCES person (id_person),
+    agencyId   INTEGER REFERENCES agencies (id_agency)
 );
 
 CREATE TABLE properties
@@ -39,16 +39,16 @@ CREATE TABLE properties
     typeHouse   VARCHAR NOT NULL,
     floorCount  INTEGER CHECK (floorCount > 0),
     roomCount   INTEGER CHECK (roomCount > 0),
-    ownerId     INTEGER NOT NULL REFERENCES person (id_person)
+    ownerId     INTEGER REFERENCES person (id_person)
 );
 
 CREATE TABLE salesHistory
 (
     id_history  SERIAL PRIMARY KEY,
     sale_date   DATE           NOT NULL,
-    propertyId  INTEGER        NOT NULL REFERENCES properties (id_property),
-    buyerId     INTEGER        NOT NULL REFERENCES person (id_person),
-    realtorId   INTEGER        NOT NULL REFERENCES realtors (id_realtor),
+    propertyId  INTEGER        REFERENCES properties (id_property),
+    buyerId     INTEGER        REFERENCES person (id_person),
+    realtorId   INTEGER        REFERENCES realtors (id_realtor),
     price       DECIMAL(12, 2) NOT NULL,
     paymentType VARCHAR        NOT NULL
 );

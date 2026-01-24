@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${agency.name}"></title>
+</head>
+<body>
+<div>
+    <p>name</p> <span th:text="${agency.name}"></span><br>
+    <p>country</p> <span th:text="${agency.country}"></span><br>
+    <p>city</p> <span th:text="${agency.city}"></span><br>
+    <p>phone</p> <span th:text="${agency.phone}"></span><br>
+    <p>email</p> <span th:text="${agency.email}"></span><br>
+    <h5>Владелец</h5>
+    <p>firstname</p> <span th:text="${agency.owner.firstname}"></span><br>
+    <p>surname</p> <span th:text="${agency.owner.surname}"></span><br>
+    <p>lastname</p> <span th:text="${agency.owner.lastname}"></span><br>
+</div>
+<a th:href="@{/agency/{id}/edit(id=${agency.id_agency})}">Редактировать</a> <br>
+<form method="post" th:action="@{/agency/{id}/delete(id=${agency.id_agency})}">
+    <button type="submit">Удалить</button>
+</form>
+<a th:href="@{/agency(page=${currentPage})}">Вернуться назад</a>
+</body>
+</html>

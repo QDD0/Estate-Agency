@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Результаты поиска</h2>
+<div th:if="${agencies.isEmpty()}">
+    Ничего не найдено
+</div>
+
+<div th:each="agency : ${agencies}">
+    <div th:action="@{/agency/search/{id}(id=${agency.id_agency}, page=${currentPage})}">
+        <p><b>name:</b> <span th:text="${agency.name}"></span></p>
+        <p><b>country:</b> <span th:text="${agency.country}"></span></p>
+        <p><b>city:</b> <span th:text="${agency.city}"></span></p>
+        <p><b>email:</b> <span th:text="${agency.email}"></span></p>
+        <p><b>phone:</b> <span th:text="${agency.phone}"></span></p>
+        <p><b>firstname:</b> <span th:text="${agency.owner.firstname}"></span></p>
+        <p><b>lastname:</b> <span th:text="${agency.owner.lastname}"></span></p>
+        <p><b>surname:</b> <span th:text="${agency.owner.surname}"></span></p>
+    </div>
+    <hr>
+</div>
+<a th:href="@{/agency(page=${currentPage ?: 1})}">← Назад к списку</a>
+</body>
+</html>

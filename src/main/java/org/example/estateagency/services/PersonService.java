@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.example.estateagency.repositories.PersonRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +19,10 @@ public class PersonService {
     @Autowired
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
+    }
+
+    public List<Person> findAll() {
+        return personRepository.findAll();
     }
 
     public Page<Person> findAll(int page, int size) {

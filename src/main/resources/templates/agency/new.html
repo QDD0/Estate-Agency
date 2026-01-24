@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Agency</title>
+</head>
+<body>
+<h2>Create New Agency</h2>
+<form method="post" th:action="@{/agency}" th:object="${agency}">
+    <p>Name: </p><input type="text" th:field="*{name}"><br>
+    <p>Country: </p><input type="text" th:field="*{country}"><br>
+    <p>City: </p><input type="text" th:field="*{city}"><br>
+    <p>Phone: </p><input type="text" th:field="*{phone}"><br>
+    <p>Email: </p><input type="text" th:field="*{email}"><br>
+
+    <p>Owner: </p>
+    <select th:field="*{owner.id_person}">
+        <option value="">Select Owner</option>
+        <option th:each="person : ${people}"
+                th:value="${person.id_person}"
+                th:text="${person.firstname + ' ' + person.surname + ' ' + person.lastname}">
+        </option>
+    </select><br><br>
+
+    <button type="submit">Save</button>
+</form>
+<a th:href="@{/agency}">Back to List</a>
+</body>
+</html>

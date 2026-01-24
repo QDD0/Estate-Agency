@@ -15,7 +15,7 @@
 </div>
 
 <div th:each="person : ${people}">
-    <a th:href="@{/people/search/{id}(id=${person.id_person}, page=${currentPage})}">
+    <div th:action="@{/people/search/{id}(id=${person.id_person}, page=${currentPage})}">
         <p><b>Имя:</b> <span th:text="${person.firstname}"></span></p>
         <p><b>Фамилия:</b> <span th:text="${person.surname}"></span></p>
         <p><b>Отчество:</b> <span th:text="${person.lastname}"></span></p>
@@ -25,7 +25,7 @@
         <p><b>Телефон:</b> <span th:text="${person.phone}"></span></p>
         <p><b>Страна:</b> <span th:text="${person.country}"></span></p>
         <p><b>Город:</b> <span th:text="${person.city}"></span></p>
-    </a>
+    </div>
     <hr>
 </div>
 

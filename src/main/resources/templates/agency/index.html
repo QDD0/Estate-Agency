@@ -5,7 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-<a th:href="@{/agency}">Создать</a>
+<a th:href="@{/agency/new}">Создать</a>
+
+<form th:action="@{agency/search}" method="get">
+    <input type="text" name="query" placeholder="Введите название компании">
+    <button type="submit">Найти</button>
+</form>
+
 <hr>
 <div th:each="agency : ${agencies}">
     <a th:href="@{agency/{id}(id=${agency.id_agency}, page=${currentPage})} ">
