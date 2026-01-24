@@ -1,5 +1,6 @@
 package org.example.estateagency.controllers;
 
+import jakarta.validation.Valid;
 import org.example.estateagency.models.Agencies;
 import org.example.estateagency.models.Person;
 import org.example.estateagency.repositories.AgencyRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -62,7 +64,10 @@ public class AgencyController {
     }
 
     @PostMapping("")
-    public String save(@ModelAttribute("agency") Agencies agency, Model model) {
+    public String save(@ModelAttribute("agency") @Valid Agencies agency, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "agency/new";
+        }
         agencyService.save(agency);
         model.addAttribute("people", personService.findAll());
         return "redirect:/agency";

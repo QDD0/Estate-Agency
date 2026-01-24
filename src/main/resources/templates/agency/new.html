@@ -7,13 +7,49 @@
 <body>
 <h2>Create New Agency</h2>
 <form method="post" th:action="@{/agency}" th:object="${agency}">
-    <p>Name: </p><input type="text" th:field="*{name}"><br>
-    <p>Country: </p><input type="text" th:field="*{country}"><br>
-    <p>City: </p><input type="text" th:field="*{city}"><br>
-    <p>Phone: </p><input type="text" th:field="*{phone}"><br>
-    <p>Email: </p><input type="text" th:field="*{email}"><br>
+    <p><b>name: </b>
+        <input type="text" th:field="*{name}">
+        <span th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}"
+              style="color: red"></span>
+    </p>
 
-    <p>Owner: </p>
+    <p><b>country: </b>
+        <input type="text" th:field="*{country}">
+        <span th:if="${#fields.hasErrors('country')}"
+              th:errors="*{country}"
+              style="color: red"></span>
+    </p>
+
+    <p><b>city: </b>
+        <input type="text" th:field="*{city}">
+        <span th:if="${#fields.hasErrors('city')}"
+              th:errors="*{city}"
+              style="color: red"></span>
+    </p>
+
+    <p><b>Name: </b>
+        <input type="text" th:field="*{name}">
+        <span th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}"
+              style="color: red"></span>
+    </p>
+
+    <p><b>phone: </b>
+        <input type="text" th:field="*{phone}">
+        <span th:if="${#fields.hasErrors('phone')}"
+              th:errors="*{phone}"
+              style="color: red"></span>
+    </p>
+
+    <p><b>email: </b>
+        <input type="text" th:field="*{email}">
+        <span th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}"
+              style="color: red"></span>
+    </p>
+
+    <p>: </p>
     <select th:field="*{owner.id_person}">
         <option value="">Select Owner</option>
         <option th:each="person : ${people}"
@@ -22,8 +58,8 @@
         </option>
     </select><br><br>
 
-    <button type="submit">Save</button>
+    <button type="submit">Сохранить</button>
 </form>
-<a th:href="@{/agency}">Back to List</a>
+<a th:href="@{/agency}">Вернуться назад</a>
 </body>
 </html>
