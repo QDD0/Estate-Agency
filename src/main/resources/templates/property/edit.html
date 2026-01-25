@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${properties.typehouse}"></title>
+</head>
+<body>
+<form method="post" th:action="@{/properties/{id}(id=${properties.id_property})}" th:object="${properties}">
+    <p>Country</p><input type="text" th:field="*{country}"><br>
+    <p>city</p><input type="text" th:field="*{city}"><br>
+    <p>typeHouse</p><input type="text" th:field="*{typehouse}"><br>
+    <p>floorCount</p><input type="number" th:field="*{floorcount}"><br>
+    <p>roomCount</p><input type="number" th:field="*{roomcount}"><br>
+
+    <select th:field="*{owner.id_person}">
+        <option value="">Выбор владельца</option>
+        <option th:each="person : ${people}"
+                th:value="${person.id_person}"
+                th:text="${person.firstname} + ' ' + ${person.surname} + ' ' + ${person.lastname}">
+        </option>
+    </select>
+
+    <button type="submit">Сохранить</button>
+</form>
+<a th:href="@{/properties}">Вернуться назад</a>
+</body>
+</html>

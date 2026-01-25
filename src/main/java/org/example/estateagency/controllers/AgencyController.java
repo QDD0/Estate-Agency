@@ -2,9 +2,7 @@ package org.example.estateagency.controllers;
 
 import jakarta.validation.Valid;
 import org.example.estateagency.models.Agencies;
-import org.example.estateagency.models.Person;
 import org.example.estateagency.repositories.AgencyRepository;
-import org.example.estateagency.repositories.PersonRepository;
 import org.example.estateagency.services.AgencyService;
 import org.example.estateagency.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;

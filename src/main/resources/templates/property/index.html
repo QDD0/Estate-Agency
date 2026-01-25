@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a th:href="@{/properties/new}">Добавить</a>
+
+<hr>
+<div th:each="property : ${properties}">
+    <a th:href="@{/properties/{id}(id=${property.id_property}, page=${currentPage})}">
+        <span th:text="${property.country}"></span><br>
+        <span th:text="${property.city}"></span><br>
+        <span th:text="${property.typehouse}"></span><br>
+        <span th:text="${property.floorcount}"></span><br>
+        <span th:text="${property.roomcount}"></span><br>
+    </a> <br>
+</div>
+
+<div>
+    <a th:if="${currentPage > 0}"
+       th:href="@{/properties(page=${currentPage - 1}, size=10)}">
+        ⬅ Предыдущая
+    </a>
+
+    <span th:text="${currentPage + 1}"></span> /
+    <span th:text="${totalPages}"></span>
+
+    <a th:if="${currentPage + 1 < totalPages}"
+       th:href="@{/properties(page=${currentPage + 1}, size=10)}">
+        Следующая ➡
+    </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="@{/properties}" th:object="${properties}">
+    <p><b>country: </b>
+        <input type="text" th:field="*{country}">
+        <span th:if="${#fields.hasErrors('country')}"
+              th:errors="*{country}"
+              style="color: red"></span>
+    </p>
+
+    <p><b>city: </b>
+        <input type="text" th:field="*{city}">
+        <span th:if="${#fields.hasErrors('city')}"
+              th:errors="*{city}"
+              style="color: red"></span>
+    </p>
+
+    <p><b>typeHouse: </b>
+        <input type="text" th:field="*{typehouse}">
+        <span th:if="${#fields.hasErrors('typehouse')}"
+              th:errors="*{typehouse}"
+              style="color: red"></span>
+    </p>
+
+    <p><b>floorCount: </b>
+        <input type="number" th:field="*{floorcount}">
+        <span th:if="${#fields.hasErrors('floorcount')}"
+              th:errors="*{floorcount}"
+              style="color: red"></span>
+    </p>
+
+    <p><b>roomCount: </b>
+        <input type="number" th:field="*{roomcount}">
+        <span th:if="${#fields.hasErrors('roomcount')}"
+              th:errors="*{roomcount}"
+              style="color: red"></span>
+    </p>
+
+    <select th:field="*{owner.id_person}">
+        <option value="">Выбор владельца</option>
+        <option th:each="person : ${people}"
+                th:value="${person.id_person}"
+                th:text="${person.firstname} + ' ' + ${person.surname} + ' ' + ${person.lastname} + ' '"></option>
+    </select> <br>
+
+    <button type="submit">Сохранить</button>
+</form>
+<a th:href="@{/properties}">Вернуться назад</a>
+</body>
+</html>

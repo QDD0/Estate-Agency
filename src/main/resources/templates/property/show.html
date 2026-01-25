@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <p>country</p><span th:text="${properties.country}"></span><br>
+    <p>city</p><span th:text="${properties.city}"></span><br>
+    <p>typeHouse</p><span th:text="${properties.typehouse}"></span><br>
+    <p>floorCount</p><span th:text="${properties.floorcount}"></span><br>
+    <p>roomCount</p><span th:text="${properties.roomcount}"></span><br>
+    <p>firstname</p><span th:text="${properties.owner.firstname}"></span><br>
+    <p>surname</p><span th:text="${properties.owner.surname}"></span><br>
+    <p>lastname</p><span th:text="${properties.owner.lastname}"></span><br>
+</div>
+<a th:href="@{/properties/{id}/edit(id=${properties.id_property})}">Редактировать</a>
+<form th:action="@{/properties/{id}/delete(id=${properties.id_property})}">
+    <button type="submit">Удалить</button>
+</form>
+<a th:href="@{/properties(page=${currentPage ?: 1})}">Вернуться назад</a>
+</body>
+</html>

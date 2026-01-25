@@ -60,4 +60,7 @@ public class Person {
 
     @OneToMany(mappedBy = "owner")
     private List<Agencies> agencies;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Properties> properties;
 }
