@@ -24,7 +24,8 @@ public class PropertyController {
     }
 
     @GetMapping("")
-    public String index(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model) {
+    public String index(@RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "10") int size, Model model) {
         Page<Properties> propertyPage = propertyService.findAll(page, size);
 
         model.addAttribute("properties", propertyPage.getContent());
@@ -42,20 +43,21 @@ public class PropertyController {
     }
 
     @PostMapping("")
-    public String saveProperty(@ModelAttribute("properties") @Valid Properties properties, BindingResult bindingResult, Model model) {
+    public String saveProperty(@ModelAttribute("properties") @Valid Properties properties,
+                               BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("people", personService.findAll());
             return "property/new";
         }
         propertyService.save(properties);
-        model.addAttribute("people", personService.findAll());
         return "redirect:/properties";
     }
 
     @GetMapping("/{id}")
-    public String showById(@PathVariable("id") int id, Model model, @RequestParam(defaultValue = "0") int page) {
+    public String showById(@PathVariable("id") int id, Model model,
+                           @RequestParam(defaultValue = "0") int page) {
         model.addAttribute("properties", propertyService.findById(id));
         model.addAttribute("currentPage", page);
-
         return "property/show";
     }
 
@@ -67,7 +69,13 @@ public class PropertyController {
     }
 
     @PostMapping("/{id}")
-    public String save(@PathVariable("id") int id, @ModelAttribute("properties") Properties properties) {
+    public String save(@PathVariable("id") int id,
+                       @ModelAttribute("properties") @Valid Properties properties,
+                       BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("people", personService.findAll());
+            return "property/edit";
+        }
         propertyService.update(id, properties);
         return "redirect:/properties";
     }
