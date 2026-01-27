@@ -63,4 +63,10 @@ public class Person {
 
     @OneToMany(mappedBy = "owner")
     private List<Properties> properties;
+
+    @OneToMany(mappedBy = "person")
+    private List<Realtors> realtors;
+
+    @OneToMany(mappedBy = "buyer")
+    private List<SalesHistory> salesBuyer;
 }

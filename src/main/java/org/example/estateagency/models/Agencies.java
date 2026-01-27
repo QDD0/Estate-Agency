@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "agencies")
@@ -40,4 +42,7 @@ public class Agencies {
     @ManyToOne
     @JoinColumn(name = "ownerid")
     private Person owner;
+
+    @OneToMany(mappedBy = "agency")
+    private List<Realtors> realtors;
 }

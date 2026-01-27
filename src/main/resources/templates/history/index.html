@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>История продаж</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/sale.css}">
+</head>
+<body>
+<div class="container">
+    <h1 class="page-title">
+        <i class="fas fa-history"></i> История продаж
+    </h1>
+
+    <div class="sales-grid" th:unless="${#lists.isEmpty(history)}">
+        <div class="sale-card" th:each="sale : ${history}">
+            <div class="card-header">
+                <span class="sale-id">Продажа #<span th:text="${sale.id_history}"></span></span>
+                <div class="date-badge">
+                    <i class="fas fa-calendar-alt icons"></i>
+                    <span th:text="${#temporals.format(sale.sale_date, 'dd.MM.yyyy')}"></span>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="section-title">
+                    <i class="fas fa-user-tie"></i> Риелтор
+                </div>
+                <div class="info-item">
+                    <span class="info-label">ФИО:</span>
+                    <span class="info-value person-name">
+                            <span th:text="${sale.realtor.person.lastname} + ' ' + ${sale.realtor.person.firstname} + ' ' + ${sale.realtor.person.surname}"></span>
+                        </span>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="section-title">
+                    <i class="fas fa-home"></i> Недвижимость
+                </div>
+                <div class="property-info">
+                    <div class="info-item">
+                        <span class="info-label">Страна:</span>
+                        <span class="info-value" th:text="${sale.property.country}"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Город:</span>
+                        <span class="info-value" th:text="${sale.property.city}"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Тип:</span>
+                        <span class="info-value" th:text="${sale.property.typehouse}"></span>
+                    </div>
+                </div>
+
+                <div class="section-title">
+                    <i class="fas fa-user-circle"></i> Владелец
+                </div>
+                <div class="info-item">
+                    <span class="info-label">ФИО:</span>
+                    <span class="info-value">
+                            <span th:text="${sale.property.owner.lastname} + ' ' + ${sale.property.owner.firstname} + ' ' + ${sale.property.owner.surname}"></span>
+                        </span>
+                </div>
+
+                <div class="price-tag">
+                    <i class="fas fa-tag icons"></i>
+                    <span th:text="${#numbers.formatDecimal(sale.price, 0, 'COMMA', 0, 'POINT') + ' ₽'}"></span>
+                </div>
+
+                <div class="payment-type">
+                    <i class="fas fa-credit-card icons"></i>
+                    <span th:text="${sale.paymenttype}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="empty-state" th:if="${#lists.isEmpty(history)}">
+        <i class="fas fa-inbox empty-icon"></i>
+        <h2 class="empty-title">Нет данных о продажах</h2>
+        <p class="empty-text">История продаж пуста</p>
+    </div>
+
+    <div class="pagination-container" th:unless="${#lists.isEmpty(history)}">
+        <div class="pagination">
+            <a th:if="${currentPage > 0}"
+               th:href="@{/history(page=${currentPage -1}, size=9)}"
+               title="Предыдущая страница">
+                <i class="fas fa-chevron-left"></i>
+                ⬅ Предыдущая
+            </a>
+
+            <span>
+                    <span class="page-current" th:text="${currentPage + 1}"></span> /
+                    <span class="page-total" th:text="${totalPages}"></span>
+                </span>
+
+            <a th:if="${currentPage + 1 < totalPages}"
+               th:href="@{/history(page=${currentPage + 1}, size=9)}"
+               title="Следующая страница">
+                Следующая ➡
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

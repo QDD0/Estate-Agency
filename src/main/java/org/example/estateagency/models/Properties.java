@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "properties")
@@ -38,4 +40,7 @@ public class Properties {
     @JoinColumn(name = "ownerid")
     @NotNull(message = "Выберите владельца")
     private Person owner;
+
+    @OneToMany(mappedBy = "property")
+    private List<SalesHistory> salesProperties;
 }
