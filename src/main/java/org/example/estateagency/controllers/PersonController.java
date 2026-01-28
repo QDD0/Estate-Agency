@@ -27,7 +27,7 @@ public class PersonController {
     }
 
     @GetMapping("")
-    public String index(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+    public String index(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "9") int size,
                        Model model) {
 
         Page<Person> personPage = personService.findAll(page, size);

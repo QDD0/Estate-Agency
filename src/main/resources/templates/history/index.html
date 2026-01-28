@@ -7,9 +7,22 @@
     <link rel="stylesheet" th:href="@{/css/sale.css}">
 </head>
 <body>
+<header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="menu-bar glass-menu">
+                <li><a th:href="@{/people}"><i ></i>Покупатели</a></li>
+                <li><a th:href="@{/agency}"><i ></i>Агентство</a></li>
+                <li><a th:href="@{/realtor}"><i ></i>Риелторы</a></li>
+                <li><a th:href="@{/properties}"><i ></i>Недвижимость</a></li>
+                <li><a th:href="@{/history}"><i ></i>История продаж</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
 <div class="container">
     <h1 class="page-title">
-        <i class="fas fa-history"></i> История продаж
+        <i class="fas fa-history" style="margin-top: 7%"></i> История продаж
     </h1>
 
     <div class="sales-grid" th:unless="${#lists.isEmpty(history)}">

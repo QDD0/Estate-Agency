@@ -25,7 +25,7 @@ public class PropertyController {
 
     @GetMapping("")
     public String index(@RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "10") int size, Model model) {
+                        @RequestParam(defaultValue = "9") int size, Model model) {
         Page<Properties> propertyPage = propertyService.findAll(page, size);
 
         model.addAttribute("properties", propertyPage.getContent());

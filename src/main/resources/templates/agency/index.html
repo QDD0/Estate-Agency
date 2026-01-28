@@ -1,41 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Агентства недвижимости</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/agency.css}">
 </head>
 <body>
-<a th:href="@{/agency/new}">Создать</a>
+<header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="menu-bar glass-menu">
+                <li><a th:href="@{/people}"><i ></i>Покупатели</a></li>
+                <li><a th:href="@{/agency}"><i ></i>Агентство</a></li>
+                <li><a th:href="@{/realtor}"><i ></i>Риелторы</a></li>
+                <li><a th:href="@{/properties}"><i ></i>Недвижимость</a></li>
+                <li><a th:href="@{/history}"><i ></i>История продаж</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <h1 class="page-title">
+        <i class="fas fa-building" style="margin-top: 7%"></i> Агентства недвижимости
+    </h1>
+    <div class="header-actions">
+        <a th:href="@{/agency/new}" class="create-btn">
+            Новое агентство
+        </a>
 
-<form th:action="@{agency/search}" method="get">
-    <input type="text" name="query" placeholder="Введите название компании">
-    <button type="submit">Найти</button>
-</form>
+        <form th:action="@{agency/search}" method="get" class="search-form">
+            <input type="text"
+                   name="query"
+                   placeholder="Введите название, город или телефон..."
+                   class="search-input">
+            <button type="submit" class="search-btn">
+                <i class="fas fa-search"></i> Найти
+            </button>
+        </form>
+    </div>
 
-<hr>
-<div th:each="agency : ${agencies}">
-    <a th:href="@{agency/{id}(id=${agency.id_agency}, page=${currentPage})} ">
-        <span th:text="${agency.name}"></span><br>
-        <span th:text="${agency.phone}"></span><br>
-        <span th:text="${agency.email}"></span><br>
-        <span th:text="${agency.country}"></span><br>
-        <span th:text="${agency.city}"></span><br>
-    </a> <br>
-</div>
+    <div class="agencies-grid" th:unless="${#lists.isEmpty(agencies)}">
+        <a th:each="agency : ${agencies}"
+           th:href="@{agency/{id}(id=${agency.id_agency}, page=${currentPage})}"
+           class="agency-card">
+            <div class="agency-name">
+                <i class="fas fa-building icons"></i>
+                <span th:text="${agency.name}"></span>
+            </div>
 
-<div>
-    <a th:if="${currentPage > 0}"
-       th:href="@{/agency(page=${currentPage - 1}, size=10)}">
-        ⬅ Предыдущая
-    </a>
+            <div class="agency-info">
+                <div class="contact-section">
+                    <div class="info-item">
+                        <span class="info-label">Телефон:</span>
+                        <span class="info-value contact-badge">
+                                <i class="fas fa-phone icons"></i>
+                                <span th:text="${agency.phone}"></span>
+                            </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value email-badge">
+                                <i class="fas fa-envelope icons"></i>
+                                <span th:text="${agency.email}"></span>
+                            </span>
+                    </div>
+                </div>
 
-    <span th:text="${currentPage + 1}"></span> /
-    <span th:text="${totalPages}"></span>
+                <div class="location-section">
+                    <div class="info-item">
+                        <span class="info-label">Страна:</span>
+                        <span class="info-value location-badge">
+                                <i class="fas fa-globe icons"></i>
+                                <span th:text="${agency.country}"></span>
+                            </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Город:</span>
+                        <span class="info-value location-badge">
+                                <i class="fas fa-city icons"></i>
+                                <span th:text="${agency.city}"></span>
+                            </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
 
-    <a th:if="${currentPage + 1 < totalPages}"
-       th:href="@{/agency(page=${currentPage + 1}, size=10)}">
-        Следующая ➡
-    </a>
+    <div class="empty-state" th:if="${#lists.isEmpty(agencies)}">
+        <i class="fas fa-building-circle-xmark empty-icon"></i>
+        <h2 class="empty-title">Агентства не найдены</h2>
+        <p class="empty-text">Создайте новое агентство или измените параметры поиска</p>
+    </div>
+
+    <div class="pagination-container" th:unless="${#lists.isEmpty(agencies)}">
+        <div class="pagination">
+            <a th:if="${currentPage > 0}"
+               th:href="@{/agency(page=${currentPage - 1}, size=9)}"
+               title="Предыдущая страница">
+                <i class="fas fa-chevron-left"></i>
+                ⬅ Предыдущая
+            </a>
+
+            <span>
+                    <span class="page-current" th:text="${currentPage + 1}"></span> /
+                    <span class="page-total" th:text="${totalPages}"></span>
+                </span>
+
+            <a th:if="${currentPage + 1 < totalPages}"
+               th:href="@{/agency(page=${currentPage + 1}, size=9)}"
+               title="Следующая страница">
+                Следующая ➡
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

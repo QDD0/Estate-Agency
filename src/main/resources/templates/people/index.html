@@ -1,43 +1,163 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Main Page</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a th:href="@{/people/new}">Создать</a>-->
+<!--<hr>-->
+<!--<form th:action="@{people/search}" method="get">-->
+<!--    <input type="text" name="query" placeholder="Введите имя или фамилию">-->
+<!--    <button type="submit">Найти</button>-->
+<!--</form>-->
+
+<!--<div th:each="person : ${people}">-->
+<!--    <a th:href="@{/people/{id}(id=${person.id_person}, page=${currentPage})}">-->
+<!--        <span th:text="${person.firstname}"></span><br>-->
+<!--        <span th:text="${person.surname}"></span><br>-->
+<!--        <span th:text="${person.lastname}"></span><br>-->
+<!--        <span th:text="${person.birthdate}"></span><br>-->
+<!--        <span th:text="${person.passportseries}"></span><br>-->
+<!--        <span th:text="${person.passportnumber}"></span><br>-->
+<!--        <span th:text="${person.phone}"></span><br>-->
+<!--        <span th:text="${person.country}"></span><br>-->
+<!--        <span th:text="${person.city}"></span><br>-->
+<!--    </a> <br>-->
+<!--</div>-->
+<!--<div>-->
+<!--    <a th:if="${currentPage > 0}"-->
+<!--       th:href="@{/people(page=${currentPage - 1}, size=10)}">-->
+<!--        ⬅ Предыдущая-->
+<!--    </a>-->
+
+<!--    <span th:text="${currentPage + 1}"></span> /-->
+<!--    <span th:text="${totalPages}"></span>-->
+
+<!--    <a th:if="${currentPage + 1 < totalPages}"-->
+<!--       th:href="@{/people(page=${currentPage + 1}, size=10)}">-->
+<!--        Следующая ➡-->
+<!--    </a>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Main Page</title>
+    <title>Список клиентов</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/people.css}">
 </head>
 <body>
-<a th:href="@{/people/new}">Создать</a>
-<hr>
-<form th:action="@{people/search}" method="get">
-    <input type="text" name="query" placeholder="Введите имя или фамилию">
-    <button type="submit">Найти</button>
-</form>
+<header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="menu-bar glass-menu">
+                <li><a th:href="@{/people}"><i ></i>Покупатели</a></li>
+                <li><a th:href="@{/agency}"><i ></i>Агентство</a></li>
+                <li><a th:href="@{/realtor}"><i ></i>Риелторы</a></li>
+                <li><a th:href="@{/properties}"><i ></i>Недвижимость</a></li>
+                <li><a th:href="@{/history}"><i ></i>История продаж</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <h1 class="page-title">
+        <i class="fas fa-users" style="margin-top: 8%"></i> Список клиентов
+    </h1>
 
-<div th:each="person : ${people}">
-    <a th:href="@{/people/{id}(id=${person.id_person}, page=${currentPage})}">
-        <span th:text="${person.firstname}"></span><br>
-        <span th:text="${person.surname}"></span><br>
-        <span th:text="${person.lastname}"></span><br>
-        <span th:text="${person.birthdate}"></span><br>
-        <span th:text="${person.passportseries}"></span><br>
-        <span th:text="${person.passportnumber}"></span><br>
-        <span th:text="${person.phone}"></span><br>
-        <span th:text="${person.country}"></span><br>
-        <span th:text="${person.city}"></span><br>
-    </a> <br>
-</div>
-<div>
-    <a th:if="${currentPage > 0}"
-       th:href="@{/people(page=${currentPage - 1}, size=10)}">
-        ⬅ Предыдущая
-    </a>
+    <div class="header-actions">
+        <a th:href="@{/people/new}" class="create-btn">
+            Создать нового клиента
+        </a>
 
-    <span th:text="${currentPage + 1}"></span> /
-    <span th:text="${totalPages}"></span>
+        <form th:action="@{people/search}" method="get" class="search-form">
+            <input type="text"
+                   name="query"
+                   placeholder="Введите имя, фамилию или телефон..."
+                   class="search-input">
+            <button type="submit" class="search-btn">
+                <i class="fas fa-search"></i> Найти
+            </button>
+        </form>
+    </div>
 
-    <a th:if="${currentPage + 1 < totalPages}"
-       th:href="@{/people(page=${currentPage + 1}, size=10)}">
-        Следующая ➡
-    </a>
+    <div class="people-grid" th:unless="${#lists.isEmpty(people)}">
+        <a th:each="person : ${people}"
+           th:href="@{/people/{id}(id=${person.id_person}, page=${currentPage})}"
+           class="person-card">
+            <div class="person-name">
+                <span th:text="${person.lastname}"></span>
+                <span th:text="${person.firstname}"></span>
+                <span th:text="${person.surname}"></span>
+            </div>
+
+            <div class="person-info">
+                <div class="birthdate-badge">
+                    <i class="fas fa-birthday-cake icons"></i>
+                    <span th:text="${#temporals.format(person.birthdate, 'dd.MM.yyyy')}"></span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">Паспорт:</span>
+                    <span class="info-value passport-info">
+                            <span th:text="${person.passportseries}"></span>
+                            <span th:text="${person.passportnumber}"></span>
+                        </span>
+                </div>
+
+                <div class="contact-info">
+                    <div class="info-item">
+                        <span class="info-label">Телефон:</span>
+                        <span class="info-value">
+                                <i class="fas fa-phone icons"></i>
+                                <span th:text="${person.phone}"></span>
+                            </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Место жительства:</span>
+                        <span class="info-value">
+                                <i class="fas fa-map-marker-alt icons"></i>
+                                <span th:text="${person.country} + ', ' + ${person.city}"></span>
+                            </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="empty-state" th:if="${#lists.isEmpty(people)}">
+        <i class="fas fa-user-slash empty-icon"></i>
+        <h2 class="empty-title">Клиенты не найдены</h2>
+        <p class="empty-text">Попробуйте изменить параметры поиска или создайте нового клиента</p>
+    </div>
+
+    <div class="pagination-container" th:unless="${#lists.isEmpty(people)}">
+        <div class="pagination">
+            <a th:if="${currentPage > 0}"
+               th:href="@{/people(page=${currentPage - 1}, size=9)}"
+               title="Предыдущая страница">
+                <i class="fas fa-chevron-left"></i>
+                ⬅ Предыдущая
+            </a>
+
+            <span>
+                    <span class="page-current" th:text="${currentPage + 1}"></span> /
+                    <span class="page-total" th:text="${totalPages}"></span>
+                </span>
+
+            <a th:if="${currentPage + 1 < totalPages}"
+               th:href="@{/people(page=${currentPage + 1}, size=9)}"
+               title="Следующая страница">
+                Следующая ➡
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

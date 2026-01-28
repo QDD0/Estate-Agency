@@ -30,7 +30,7 @@ public class AgencyController {
     }
 
     @GetMapping("")
-    public String index(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public String index(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "9") int size) {
         Page<Agencies> agenciesPage = agencyService.findAll(page, size);
 
         model.addAttribute("agencies", agenciesPage.getContent());
