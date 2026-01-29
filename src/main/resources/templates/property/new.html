@@ -2,54 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Property Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/property/property.css}">
 </head>
 <body>
-<form method="post" th:action="@{/properties}" th:object="${properties}">
-    <p><b>country: </b>
-        <input type="text" th:field="*{country}">
-        <span th:if="${#fields.hasErrors('country')}"
-              th:errors="*{country}"
-              style="color: red"></span>
-    </p>
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-home"></i>
+            Добавить новую недвижимость
+        </h1>
+        <p class="page-subtitle">Заполните все поля формы для добавления объекта недвижимости</p>
+    </div>
 
-    <p><b>city: </b>
-        <input type="text" th:field="*{city}">
-        <span th:if="${#fields.hasErrors('city')}"
-              th:errors="*{city}"
-              style="color: red"></span>
-    </p>
+    <form method="post" th:action="@{/properties}" th:object="${properties}">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="country">Страна:</label>
+                <input type="text" id="country" th:field="*{country}" class="form-input"
+                       placeholder="Введите название страны">
+                <div class="form-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Страна расположения недвижимости
+                </div>
+                <span th:if="${#fields.hasErrors('country')}"
+                      th:errors="*{country}"
+                      class="error-message"></span>
+            </div>
 
-    <p><b>typeHouse: </b>
-        <input type="text" th:field="*{typehouse}">
-        <span th:if="${#fields.hasErrors('typehouse')}"
-              th:errors="*{typehouse}"
-              style="color: red"></span>
-    </p>
+            <div class="form-group">
+                <label for="city">Город:</label>
+                <input type="text" id="city" th:field="*{city}" class="form-input"
+                       placeholder="Введите название города">
+                <div class="form-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Город расположения недвижимости
+                </div>
+                <span th:if="${#fields.hasErrors('city')}"
+                      th:errors="*{city}"
+                      class="error-message"></span>
+            </div>
+        </div>
 
-    <p><b>floorCount: </b>
-        <input type="number" th:field="*{floorcount}">
-        <span th:if="${#fields.hasErrors('floorcount')}"
-              th:errors="*{floorcount}"
-              style="color: red"></span>
-    </p>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="typehouse">Тип дома:</label>
+                <input type="text" id="typehouse" th:field="*{typehouse}" class="form-input"
+                       placeholder="Например: квартира, дом, коттедж">
+                <div class="form-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Тип недвижимого имущества
+                </div>
+                <span th:if="${#fields.hasErrors('typehouse')}"
+                      th:errors="*{typehouse}"
+                      class="error-message"></span>
+            </div>
 
-    <p><b>roomCount: </b>
-        <input type="number" th:field="*{roomcount}">
-        <span th:if="${#fields.hasErrors('roomcount')}"
-              th:errors="*{roomcount}"
-              style="color: red"></span>
-    </p>
+            <div class="form-group">
+                <label for="owner">Владелец:</label>
+                <select id="owner" th:field="*{owner.id_person}" class="form-select">
+                    <option value="">Выберите владельца из списка</option>
+                    <option th:each="person : ${people}"
+                            th:value="${person.id_person}"
+                            th:text="${person.firstname} + ' ' + ${person.surname} + ' ' + ${person.lastname}">
+                    </option>
+                </select>
+                <div class="form-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Владелец должен быть выбран из существующих людей
+                </div>
+            </div>
+        </div>
 
-    <select th:field="*{owner.id_person}">
-        <option value="">Выбор владельца</option>
-        <option th:each="person : ${people}"
-                th:value="${person.id_person}"
-                th:text="${person.firstname} + ' ' + ${person.surname} + ' ' + ${person.lastname} + ' '"></option>
-    </select> <br>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="floorcount">Количество этажей:</label>
+                <input type="number" id="floorcount" th:field="*{floorcount}" class="form-input"
+                       placeholder="0" min="0">
+                <div class="form-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Общее количество этажей в здании
+                </div>
+                <span th:if="${#fields.hasErrors('floorcount')}"
+                      th:errors="*{floorcount}"
+                      class="error-message"></span>
+            </div>
 
-    <button type="submit">Сохранить</button>
-</form>
-<a th:href="@{/properties}">Вернуться назад</a>
+            <div class="form-group">
+                <label for="roomcount">Количество комнат:</label>
+                <input type="number" id="roomcount" th:field="*{roomcount}" class="form-input"
+                       placeholder="0" min="0">
+                <div class="form-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Количество жилых комнат в недвижимости
+                </div>
+                <span th:if="${#fields.hasErrors('roomcount')}"
+                      th:errors="*{roomcount}"
+                      class="error-message"></span>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-submit">
+                <i class="fas fa-save"></i> Сохранить недвижимость
+            </button>
+            <a th:href="@{/properties}" class="btn btn-back">
+                <i class="fas fa-times"></i> Отмена
+            </a>
+        </div>
+    </form>
+</div>
 </body>
 </html>

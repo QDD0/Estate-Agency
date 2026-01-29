@@ -3,25 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${properties.typehouse}"></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/property/property.css}">
 </head>
 <body>
-<form method="post" th:action="@{/properties/{id}(id=${properties.id_property})}" th:object="${properties}">
-    <p>Country</p><input type="text" th:field="*{country}"><br>
-    <p>city</p><input type="text" th:field="*{city}"><br>
-    <p>typeHouse</p><input type="text" th:field="*{typehouse}"><br>
-    <p>floorCount</p><input type="number" th:field="*{floorcount}"><br>
-    <p>roomCount</p><input type="number" th:field="*{roomcount}"><br>
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-edit"></i>
+            Редактирование недвижимости
+        </h1>
+        <p class="page-subtitle">Измените необходимые поля для обновления информации</p>
+    </div>
 
-    <select th:field="*{owner.id_person}">
-        <option value="">Выбор владельца</option>
-        <option th:each="person : ${people}"
-                th:value="${person.id_person}"
-                th:text="${person.firstname} + ' ' + ${person.surname} + ' ' + ${person.lastname}">
-        </option>
-    </select>
+    <form method="post" th:action="@{/properties/{id}(id=${properties.id_property})}" th:object="${properties}">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="country">Страна:</label>
+                <input type="text" id="country" th:field="*{country}" class="form-input">
+                <span th:if="${#fields.hasErrors('country')}"
+                      th:errors="*{country}"
+                      class="error-message"></span>
+            </div>
 
-    <button type="submit">Сохранить</button>
-</form>
-<a th:href="@{/properties}">Вернуться назад</a>
+            <div class="form-group">
+                <label for="city">Город:</label>
+                <input type="text" id="city" th:field="*{city}" class="form-input">
+                <span th:if="${#fields.hasErrors('city')}"
+                      th:errors="*{city}"
+                      class="error-message"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="typehouse">Тип дома:</label>
+                <input type="text" id="typehouse" th:field="*{typehouse}" class="form-input">
+                <span th:if="${#fields.hasErrors('typehouse')}"
+                      th:errors="*{typehouse}"
+                      class="error-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="owner">Владелец:</label>
+                <select id="owner" th:field="*{owner.id_person}" class="form-select">
+                    <option value="">Выберите владельца</option>
+                    <option th:each="person : ${people}"
+                            th:value="${person.id_person}"
+                            th:text="${person.firstname} + ' ' + ${person.surname} + ' ' + ${person.lastname}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="floorcount">Количество этажей:</label>
+                <input type="number" id="floorcount" th:field="*{floorcount}" class="form-input" min="0">
+                <span th:if="${#fields.hasErrors('floorcount')}"
+                      th:errors="*{floorcount}"
+                      class="error-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="roomcount">Количество комнат:</label>
+                <input type="number" id="roomcount" th:field="*{roomcount}" class="form-input" min="0">
+                <span th:if="${#fields.hasErrors('roomcount')}"
+                      th:errors="*{roomcount}"
+                      class="error-message"></span>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-submit">
+                <i class="fas fa-save"></i> Сохранить изменения
+            </button>
+            <a th:href="@{/properties}" class="btn btn-back">
+                <i class="fas fa-times"></i> Отмена
+            </a>
+        </div>
+    </form>
+</div>
 </body>
 </html>

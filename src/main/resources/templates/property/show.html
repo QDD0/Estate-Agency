@@ -2,23 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${properties.typehouse}"></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/property/property.css}">
 </head>
 <body>
-<div>
-    <p>country</p><span th:text="${properties.country}"></span><br>
-    <p>city</p><span th:text="${properties.city}"></span><br>
-    <p>typeHouse</p><span th:text="${properties.typehouse}"></span><br>
-    <p>floorCount</p><span th:text="${properties.floorcount}"></span><br>
-    <p>roomCount</p><span th:text="${properties.roomcount}"></span><br>
-    <p>firstname</p><span th:text="${properties.owner.firstname}"></span><br>
-    <p>surname</p><span th:text="${properties.owner.surname}"></span><br>
-    <p>lastname</p><span th:text="${properties.owner.lastname}"></span><br>
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-home"></i>
+            <span th:text="${properties.typehouse}"></span>
+        </h1>
+        <p class="page-subtitle">Детальная информация об объекте недвижимости</p>
+    </div>
+
+    <div class="property-info">
+        <div class="info-card">
+            <h3 class="card-title"><i class="fas fa-info-circle"></i> Основная информация</h3>
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-building"></i> Тип дома:</span>
+                <span class="info-value" th:text="${properties.typehouse}"></span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-globe"></i> Страна:</span>
+                <span class="info-value" th:text="${properties.country}"></span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-city"></i> Город:</span>
+                <span class="info-value" th:text="${properties.city}"></span>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3 class="card-title"><i class="fas fa-chart-bar"></i> Характеристики</h3>
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-building"></i> Количество этажей:</span>
+                <span class="info-value" th:text="${properties.floorcount}"></span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-door-closed"></i> Количество комнат:</span>
+                <span class="info-value" th:text="${properties.roomcount}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="owner-section">
+        <h3 class="owner-title"><i class="fas fa-user-tie"></i> Владелец недвижимости</h3>
+        <div class="owner-info">
+            <div class="owner-item">
+                <i class="fas fa-user"></i>
+                <span><b>Имя:</b> <span th:text="${properties.owner.firstname}"></span></span>
+            </div>
+
+            <div class="owner-item">
+                <i class="fas fa-user"></i>
+                <span><b>Фамилия:</b> <span th:text="${properties.owner.surname}"></span></span>
+            </div>
+
+            <div class="owner-item">
+                <i class="fas fa-user"></i>
+                <span><b>Отчество:</b> <span th:text="${properties.owner.lastname}"></span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a class="btn btn-edit" th:href="@{/properties/{id}/edit(id=${properties.id_property})}">
+            <i class="fas fa-edit"></i> Редактировать
+        </a>
+
+        <form method="post" th:action="@{/properties/{id}/delete(id=${properties.id_property})}">
+            <button type="submit" class="btn btn-delete">
+                <i class="fas fa-trash-alt"></i> Удалить
+            </button>
+        </form>
+
+        <a class="btn btn-back" th:href="@{/properties(page=${currentPage ?: 1})}">
+            <i class="fas fa-arrow-left"></i> Вернуться назад
+        </a>
+    </div>
 </div>
-<a th:href="@{/properties/{id}/edit(id=${properties.id_property})}">Редактировать</a>
-<form th:action="@{/properties/{id}/delete(id=${properties.id_property})}">
-    <button type="submit">Удалить</button>
-</form>
-<a th:href="@{/properties(page=${currentPage ?: 1})}">Вернуться назад</a>
 </body>
 </html>
