@@ -1,25 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="${agency.name}"></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/agency/agency.css}">
 </head>
 <body>
-<div>
-    <p>name</p> <span th:text="${agency.name}"></span><br>
-    <p>country</p> <span th:text="${agency.country}"></span><br>
-    <p>city</p> <span th:text="${agency.city}"></span><br>
-    <p>phone</p> <span th:text="${agency.phone}"></span><br>
-    <p>email</p> <span th:text="${agency.email}"></span><br>
-    <h5>Владелец</h5>
-    <p>firstname</p> <span th:text="${agency.owner.firstname}"></span><br>
-    <p>surname</p> <span th:text="${agency.owner.surname}"></span><br>
-    <p>lastname</p> <span th:text="${agency.owner.lastname}"></span><br>
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-building"></i>
+            <span th:text="${agency.name}"></span>
+        </h1>
+        <p class="page-subtitle">Детальная информация об агентстве</p>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3 class="card-title"><i class="fas fa-info-circle"></i> Основная информация</h3>
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-building"></i> Название:</span>
+                <span class="info-value" th:text="${agency.name}"></span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-phone"></i> Телефон:</span>
+                <div class="badge-container">
+                    <span class="contact-badge">
+                        <i class="fas fa-phone icons"></i>
+                        <span th:text="${agency.phone}"></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-envelope"></i> Email:</span>
+                <div class="badge-container">
+                    <span class="email-badge">
+                        <i class="fas fa-envelope icons"></i>
+                        <span th:text="${agency.email}"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3 class="card-title"><i class="fas fa-map-marker-alt"></i> Местоположение</h3>
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-globe"></i> Страна:</span>
+                <div class="badge-container">
+                    <span class="location-badge">
+                        <i class="fas fa-globe icons"></i>
+                        <span th:text="${agency.country}"></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-city"></i> Город:</span>
+                <div class="badge-container">
+                    <span class="location-badge">
+                        <i class="fas fa-city icons"></i>
+                        <span th:text="${agency.city}"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="owner-section">
+        <h3 class="owner-title"><i class="fas fa-user-tie"></i> Владелец агентства</h3>
+        <div class="owner-info">
+            <div class="owner-item">
+                <i class="fas fa-user"></i>
+                <span><b>Имя:</b> <span th:text="${agency.owner.firstname}"></span></span>
+            </div>
+
+            <div class="owner-item">
+                <i class="fas fa-user"></i>
+                <span><b>Фамилия:</b> <span th:text="${agency.owner.surname}"></span></span>
+            </div>
+
+            <div class="owner-item">
+                <i class="fas fa-user"></i>
+                <span><b>Отчество:</b> <span th:text="${agency.owner.lastname}"></span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a class="btn btn-edit" th:href="@{/agency/{id}/edit(id=${agency.id_agency})}">
+            <i class="fas fa-edit"></i> Редактировать
+        </a>
+
+        <form method="post" th:action="@{/agency/{id}/delete(id=${agency.id_agency})}"
+              onsubmit="return confirm('Вы уверены, что хотите удалить это агентство?');">
+            <button type="submit" class="btn btn-delete">
+                <i class="fas fa-trash-alt"></i> Удалить
+            </button>
+        </form>
+
+        <a class="btn btn-back" th:href="@{/agency(page=${currentPage})}">
+            <i class="fas fa-arrow-left"></i> Вернуться назад
+        </a>
+    </div>
 </div>
-<a th:href="@{/agency/{id}/edit(id=${agency.id_agency})}">Редактировать</a> <br>
-<form method="post" th:action="@{/agency/{id}/delete(id=${agency.id_agency})}">
-    <button type="submit">Удалить</button>
-</form>
-<a th:href="@{/agency(page=${currentPage})}">Вернуться назад</a>
 </body>
 </html>

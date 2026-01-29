@@ -3,63 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Agency</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/agency/agency.css}">
 </head>
 <body>
-<h2>Create New Agency</h2>
-<form method="post" th:action="@{/agency}" th:object="${agency}">
-    <p><b>name: </b>
-        <input type="text" th:field="*{name}">
-        <span th:if="${#fields.hasErrors('name')}"
-              th:errors="*{name}"
-              style="color: red"></span>
-    </p>
 
-    <p><b>country: </b>
-        <input type="text" th:field="*{country}">
-        <span th:if="${#fields.hasErrors('country')}"
-              th:errors="*{country}"
-              style="color: red"></span>
-    </p>
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-building"></i>
+            Создание нового агентства
+        </h1>
+        <p class="page-subtitle">Заполните все необходимые поля для добавления нового агентства</p>
+    </div>
 
-    <p><b>city: </b>
-        <input type="text" th:field="*{city}">
-        <span th:if="${#fields.hasErrors('city')}"
-              th:errors="*{city}"
-              style="color: red"></span>
-    </p>
+    <div class="form-container">
+        <form method="post" th:action="@{/agency}" th:object="${agency}">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-building"></i> Название агентства
+                    </label>
+                    <input type="text" th:field="*{name}" class="form-input"
+                           placeholder="Введите название агентства">
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Уникальное название для идентификации агентства
+                    </div>
+                    <div class="error-message" th:if="${#fields.hasErrors('name')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{name}"></span>
+                    </div>
+                </div>
 
-    <p><b>Name: </b>
-        <input type="text" th:field="*{name}">
-        <span th:if="${#fields.hasErrors('name')}"
-              th:errors="*{name}"
-              style="color: red"></span>
-    </p>
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-phone"></i> Телефон
+                    </label>
+                    <input type="text" th:field="*{phone}" class="form-input"
+                           placeholder="+7 (XXX) XXX-XX-XX">
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Контактный телефон агентства
+                    </div>
+                    <div class="error-message" th:if="${#fields.hasErrors('phone')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{phone}"></span>
+                    </div>
+                </div>
+            </div>
 
-    <p><b>phone: </b>
-        <input type="text" th:field="*{phone}">
-        <span th:if="${#fields.hasErrors('phone')}"
-              th:errors="*{phone}"
-              style="color: red"></span>
-    </p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-globe"></i> Страна
+                    </label>
+                    <input type="text" th:field="*{country}" class="form-input"
+                           placeholder="Введите страну">
+                    <div class="error-message" th:if="${#fields.hasErrors('country')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{country}"></span>
+                    </div>
+                </div>
 
-    <p><b>email: </b>
-        <input type="text" th:field="*{email}">
-        <span th:if="${#fields.hasErrors('email')}"
-              th:errors="*{email}"
-              style="color: red"></span>
-    </p>
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-city"></i> Город
+                    </label>
+                    <input type="text" th:field="*{city}" class="form-input"
+                           placeholder="Введите город">
+                    <div class="error-message" th:if="${#fields.hasErrors('city')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{city}"></span>
+                    </div>
+                </div>
+            </div>
 
-    <p>: </p>
-    <select th:field="*{owner.id_person}">
-        <option value="">Select Owner</option>
-        <option th:each="person : ${people}"
-                th:value="${person.id_person}"
-                th:text="${person.firstname + ' ' + person.surname + ' ' + person.lastname}">
-        </option>
-    </select><br><br>
+            <div class="form-group">
+                <label class="form-label required">
+                    <i class="fas fa-envelope"></i> Email
+                </label>
+                <input type="text" th:field="*{email}" class="form-input"
+                       placeholder="example@agency.com">
+                <div class="form-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Электронная почта для связи
+                </div>
+                <div class="error-message" th:if="${#fields.hasErrors('email')}">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span th:errors="*{email}"></span>
+                </div>
+            </div>
 
-    <button type="submit">Сохранить</button>
-</form>
-<a th:href="@{/agency}">Вернуться назад</a>
+            <div class="owner-section">
+                <h3 class="owner-title">
+                    <i class="fas fa-user-tie"></i> Выберите владельца агентства
+                </h3>
+                <div class="form-group">
+                    <select th:field="*{owner.id_person}" class="form-select">
+                        <option value="">Выберите владельца из списка</option>
+                        <option th:each="person : ${people}"
+                                th:value="${person.id_person}"
+                                th:text="${person.firstname + ' ' + person.surname + ' ' + person.lastname}">
+                        </option>
+                    </select>
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Владелец должен быть выбран из списка существующих людей
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-submit">
+                    <i class="fas fa-save"></i> Сохранить агентство
+                </button>
+
+                <a th:href="@{/agency}" class="btn btn-back">
+                    <i class="fas fa-times"></i> Отмена
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

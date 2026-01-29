@@ -1,28 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Результаты поиска агентств</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/agency/agency.css}">
 </head>
 <body>
-<h2>Результаты поиска</h2>
-<div th:if="${agencies.isEmpty()}">
-    Ничего не найдено
-</div>
-
-<div th:each="agency : ${agencies}">
-    <div th:action="@{/agency/search/{id}(id=${agency.id_agency}, page=${currentPage})}">
-        <p><b>name:</b> <span th:text="${agency.name}"></span></p>
-        <p><b>country:</b> <span th:text="${agency.country}"></span></p>
-        <p><b>city:</b> <span th:text="${agency.city}"></span></p>
-        <p><b>email:</b> <span th:text="${agency.email}"></span></p>
-        <p><b>phone:</b> <span th:text="${agency.phone}"></span></p>
-        <p><b>firstname:</b> <span th:text="${agency.owner.firstname}"></span></p>
-        <p><b>lastname:</b> <span th:text="${agency.owner.lastname}"></span></p>
-        <p><b>surname:</b> <span th:text="${agency.owner.surname}"></span></p>
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-search"></i>
+            Результаты поиска агентств
+        </h1>
     </div>
-    <hr>
+
+    <div class="search-header">
+        <div class="search-info">
+            <p>
+                <i class="fas fa-info-circle"></i>
+                Найдено агентств:
+                <span class="result-count" th:text="${agencies.size()}"></span>
+            </p>
+        </div>
+
+        <a th:href="@{/agency(page=${currentPage ?: 1})}" class="btn btn-back">
+            <i class="fas fa-arrow-left"></i> Назад к списку
+        </a>
+    </div>
+
+    <div th:if="${agencies.isEmpty()}" class="no-results">
+        <i class="fas fa-search"></i>
+        <h3>Агентства не найдены</h3>
+        <p>Попробуйте изменить параметры поиска</p>
+    </div>
+
+    <div class="agencies-grid" th:unless="${agencies.isEmpty()}">
+        <div th:each="agency : ${agencies}" class="agency-card">
+            <div class="agency-header">
+                <h3 class="agency-name">
+                    <i class="fas fa-building"></i>
+                    <span th:text="${agency.name}"></span>
+                </h3>
+
+                <a th:href="@{/agency/{id}(id=${agency.id_agency})}" class="view-btn">
+                    <i class="fas fa-eye"></i> Просмотр
+                </a>
+            </div>
+
+            <div class="agency-info">
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-phone"></i> Телефон:</span>
+                    <span class="badge contact-badge" th:text="${agency.phone}"></span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-envelope"></i> Email:</span>
+                    <span class="badge email-badge" th:text="${agency.email}"></span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-map-marker-alt"></i> Местоположение:</span>
+                    <span class="badge location-badge" th:text="${agency.city + ', ' + agency.country}"></span>
+                </div>
+            </div>
+
+            <div class="owner-section">
+                <h4 class="owner-title">
+                    <i class="fas fa-user-tie"></i> Владелец
+                </h4>
+                <div class="owner-info">
+                    <div class="owner-item">
+                        <i class="fas fa-user"></i>
+                        <span><b>Имя:</b> <span th:text="${agency.owner.firstname}"></span></span>
+                    </div>
+
+                    <div class="owner-item">
+                        <i class="fas fa-user"></i>
+                        <span><b>Фамилия:</b> <span th:text="${agency.owner.surname}"></span></span>
+                    </div>
+
+                    <div class="owner-item">
+                        <i class="fas fa-user"></i>
+                        <span><b>Отчество:</b> <span th:text="${agency.owner.lastname}"></span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <a th:href="@{/agency/{id}/edit(id=${agency.id_agency})}" class="action-btn edit-btn">
+                    <i class="fas fa-edit"></i> Редактировать
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-<a th:href="@{/agency(page=${currentPage ?: 1})}">← Назад к списку</a>
 </body>
 </html>
