@@ -1,32 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Редактировать данные</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/people/people.css}">
 </head>
 <body>
-<form method="post" th:action="@{/people/{id}(id=${person.id_person})}" th:object="${person}">
-    <label>first name</label>
-    <input type="text" th:field="*{firstname}"><br>
-    <label>surname</label>
-    <input type="text" th:field="*{surname}"><br>
-    <label>lastname</label>
-    <input type="text" th:field="*{lastname}"><br>
-    <label>birthdate</label>
-    <input type="date" th:field="*{birthdate}"><br>
-    <label>passportnumber</label>
-    <input type="text" th:field="*{passportnumber}"><br>
-    <label>passportseries</label>
-    <input type="text" th:field="*{passportseries}"><br>
-    <label>phone</label>
-    <input type="text" th:field="*{phone}"><br>
-    <label>country</label>
-    <input type="text" th:field="*{country}"><br>
-    <label>city</label>
-    <input type="text" th:field="*{city}"><br>
 
-    <button type="submit">Сохранить</button>
-</form>
-<a th:href="@{/people}">Вернуться назад</a>
+<div class="container">
+    <h1><i class="fas fa-user-edit"></i> Редактировать данные человека</h1>
+
+    <div class="form-container">
+        <div class="form-header">
+            <p><i class="fas fa-info-circle"></i> Измените необходимые поля и нажмите "Сохранить"</p>
+        </div>
+
+        <form method="post" th:action="@{/people/{id}(id=${person.id_person})}" th:object="${person}">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-user"></i> Имя
+                    </label>
+                    <input type="text" th:field="*{firstname}" class="form-input" placeholder="Введите имя">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-user"></i> Фамилия
+                    </label>
+                    <input type="text" th:field="*{surname}" class="form-input" placeholder="Введите фамилию">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user"></i> Отчество
+                    </label>
+                    <input type="text" th:field="*{lastname}" class="form-input" placeholder="Введите отчество">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-birthday-cake"></i> Дата рождения
+                    </label>
+                    <input type="date" th:field="*{birthdate}" class="form-input">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-hashtag"></i> Номер паспорта
+                    </label>
+                    <input type="text" th:field="*{passportnumber}" class="form-input" placeholder="XXXXXX">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-passport"></i> Серия паспорта
+                    </label>
+                    <input type="text" th:field="*{passportseries}" class="form-input" placeholder="XXXX">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-phone"></i> Телефон
+                    </label>
+                    <input type="text" th:field="*{phone}" class="form-input" placeholder="+7 (XXX) XXX-XX-XX">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-globe"></i> Страна
+                    </label>
+                    <input type="text" th:field="*{country}" class="form-input" placeholder="Введите страну">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-city"></i> Город
+                    </label>
+                    <input type="text" th:field="*{city}" class="form-input" placeholder="Введите город">
+                </div>
+
+                <div class="form-group"></div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-submit">
+                    <i class="fas fa-save"></i> Сохранить изменения
+                </button>
+
+                <a th:href="@{/people}" class="btn btn-back">
+                    <i class="fas fa-times"></i> Отмена
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

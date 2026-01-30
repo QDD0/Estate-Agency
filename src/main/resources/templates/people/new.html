@@ -1,75 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Добавить человека</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/people/people.css}">
 </head>
 <body>
-<form method="post" th:action="@{/people}" th:object="${person}">
-    <p><b>firstname: </b>
-        <input type="text" th:field="*{firstname}">
-        <span th:if="${#fields.hasErrors('firstname')}"
-              th:errors="*{firstname}"
-              style="color: red;"></span>
-    </p>
 
-    <p><b>surname: </b>
-        <input type="text" th:field="*{surname}">
-        <span th:if="${#fields.hasErrors('surname')}"
-              th:errors="*{surname}"
-              style="color: red;"></span>
-    </p>
+<div class="container">
+    <h1><i class="fas fa-user-plus"></i> Добавить нового человека</h1>
 
-    <p><b>lastname: </b>
-        <input type="text" th:field="*{lastname}">
-        <span th:if="${#fields.hasErrors('lastname')}"
-              th:errors="*{lastname}"
-              style="color: red;"></span>
-    </p>
-    <p><b>birthdate: </b>
-        <input type="date" th:field="*{birthdate}">
-        <span th:if="${#fields.hasErrors('birthdate')}"
-              th:errors="*{birthdate}"
-              style="color: red;"></span>
-    </p>
+    <div class="form-container">
+        <form method="post" th:action="@{/people}" th:object="${person}">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-user"></i> Имя
+                    </label>
+                    <input type="text" th:field="*{firstname}" class="form-input" placeholder="Введите имя">
+                    <div class="error-message" th:if="${#fields.hasErrors('firstname')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{firstname}"></span>
+                    </div>
+                </div>
 
-    <p><b>passportseries: </b>
-        <input type="text" th:field="*{passportseries}">
-        <span th:if="${#fields.hasErrors('passportseries')}"
-              th:errors="*{passportseries}"
-              style="color: red;"></span>
-    </p>
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-user"></i> Фамилия
+                    </label>
+                    <input type="text" th:field="*{surname}" class="form-input" placeholder="Введите фамилию">
+                    <div class="error-message" th:if="${#fields.hasErrors('surname')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{surname}"></span>
+                    </div>
+                </div>
+            </div>
 
-    <p><b>passportnumber: </b>
-        <input type="text" th:field="*{passportnumber}">
-        <span th:if="${#fields.hasErrors('passportnumber')}"
-              th:errors="*{passportnumber}"
-              style="color: red;"></span>
-    </p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user"></i> Отчество
+                    </label>
+                    <input type="text" th:field="*{lastname}" class="form-input" placeholder="Введите отчество">
+                    <div class="error-message" th:if="${#fields.hasErrors('lastname')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{lastname}"></span>
+                    </div>
+                </div>
 
-    <p><b>phone: </b>
-        <input type="text" th:field="*{phone}">
-        <span th:if="${#fields.hasErrors('phone')}"
-              th:errors="*{phone}"
-              style="color: red;"></span>
-    </p>
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-birthday-cake"></i> Дата рождения
+                    </label>
+                    <input type="date" th:field="*{birthdate}" class="form-input">
+                    <div class="error-message" th:if="${#fields.hasErrors('birthdate')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{birthdate}"></span>
+                    </div>
+                </div>
+            </div>
 
-    <p><b>country: </b>
-        <input type="text" th:field="*{country}">
-        <span th:if="${#fields.hasErrors('country')}"
-              th:errors="*{country}"
-              style="color: red;"></span>
-    </p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-passport"></i> Серия паспорта
+                    </label>
+                    <input type="text" th:field="*{passportseries}" class="form-input" placeholder="XXXX">
+                    <div class="error-message" th:if="${#fields.hasErrors('passportseries')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{passportseries}"></span>
+                    </div>
+                </div>
 
-    <p><b>city: </b>
-        <input type="text" th:field="*{city}">
-        <span th:if="${#fields.hasErrors('city')}"
-              th:errors="*{city}"
-              style="color: red;"></span>
-    </p>
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-hashtag"></i> Номер паспорта
+                    </label>
+                    <input type="text" th:field="*{passportnumber}" class="form-input" placeholder="XXXXXX">
+                    <div class="error-message" th:if="${#fields.hasErrors('passportnumber')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{passportnumber}"></span>
+                    </div>
+                </div>
+            </div>
 
-    <button type="submit">Сохранить</button>
-</form>
-<a th:href="@{/people}">Вернуться назад</a>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-phone"></i> Телефон
+                    </label>
+                    <input type="text" th:field="*{phone}" class="form-input" placeholder="+7 (XXX) XXX-XX-XX">
+                    <div class="error-message" th:if="${#fields.hasErrors('phone')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{phone}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-globe"></i> Страна
+                    </label>
+                    <input type="text" th:field="*{country}" class="form-input" placeholder="Введите страну">
+                    <div class="error-message" th:if="${#fields.hasErrors('country')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{country}"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-city"></i> Город
+                    </label>
+                    <input type="text" th:field="*{city}" class="form-input" placeholder="Введите город">
+                    <div class="error-message" th:if="${#fields.hasErrors('city')}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span th:errors="*{city}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-submit">
+                    <i class="fas fa-save"></i> Сохранить
+                </button>
+
+                <a th:href="@{/people}" class="btn btn-back">
+                    <i class="fas fa-arrow-left"></i> Вернуться назад
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

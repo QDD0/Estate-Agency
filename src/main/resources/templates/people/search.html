@@ -1,33 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Результаты поиска</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/people/people.css}">
 </head>
 <body>
-<h2>Результаты поиска</h2>
 
-<a th:href="@{/people(page=${currentPage ?: 1})}">← Назад к списку</a>
-<hr>
+<div class="container">
+    <h2><i class="fas fa-search"></i> Результаты поиска</h2>
 
-<div th:if="${people.isEmpty()}">
-    Ничего не найдено
-</div>
+    <div class="search-header">
+        <div class="search-info">
+            <p>
+                <i class="fas fa-info-circle"></i>
+                Найдено результатов:
+                <span class="result-count" th:text="${people.size()}"></span>
+            </p>
+        </div>
 
-<div th:each="person : ${people}">
-    <div th:action="@{/people/search/{id}(id=${person.id_person}, page=${currentPage})}">
-        <p><b>Имя:</b> <span th:text="${person.firstname}"></span></p>
-        <p><b>Фамилия:</b> <span th:text="${person.surname}"></span></p>
-        <p><b>Отчество:</b> <span th:text="${person.lastname}"></span></p>
-        <p><b>Дата рождения:</b> <span th:text="${person.birthdate}"></span></p>
-        <p><b>Серия паспорта:</b> <span th:text="${person.passportseries}"></span></p>
-        <p><b>Номер паспорта:</b> <span th:text="${person.passportnumber}"></span></p>
-        <p><b>Телефон:</b> <span th:text="${person.phone}"></span></p>
-        <p><b>Страна:</b> <span th:text="${person.country}"></span></p>
-        <p><b>Город:</b> <span th:text="${person.city}"></span></p>
+        <a th:href="@{/people(page=${currentPage ?: 1})}" class="btn btn-back">
+            <i class="fas fa-arrow-left"></i> Назад к списку
+        </a>
     </div>
-    <hr>
-</div>
 
+    <div th:if="${people.isEmpty()}" class="no-results">
+        <i class="fas fa-search"></i>
+        <h3>Ничего не найдено</h3>
+        <p>Попробуйте изменить параметры поиска</p>
+    </div>
+
+    <div th:each="person : ${people}" class="search-result-card">
+        <div class="person-header">
+            <div class="person-name">
+                <i class="fas fa-user"></i>
+                <span th:text="${person.surname + ' ' + person.firstname + ' ' + person.lastname}"></span>
+            </div>
+
+            <a th:href="@{/people/{id}(id=${person.id_person})}" class="btn btn-view">
+                <i class="fas fa-eye"></i> Просмотреть
+            </a>
+        </div>
+
+        <div class="person-info-grid">
+            <div class="info-item">
+                <b><i class="fas fa-birthday-cake"></i> Дата рождения:</b>
+                <span th:text="${person.birthdate}"></span>
+            </div>
+
+            <div class="info-item">
+                <b><i class="fas fa-passport"></i> Паспорт:</b>
+                <span th:text="${person.passportseries + ' ' + person.passportnumber}"></span>
+            </div>
+
+            <div class="info-item">
+                <b><i class="fas fa-phone"></i> Телефон:</b>
+                <span th:text="${person.phone}"></span>
+            </div>
+
+            <div class="info-item">
+                <b><i class="fas fa-map-marker-alt"></i> Место жительства:</b>
+                <span th:text="${person.city + ', ' + person.country}"></span>
+            </div>
+        </div>
+
+        <div class="result-actions">
+            <a th:href="@{/people/{id}/edit(id=${person.id_person})}" class="btn btn-view" style="margin-right: 10px;">
+                <i class="fas fa-edit"></i> Редактировать
+            </a>
+
+            <form method="post" th:action="@{/people/{id}/delete(id=${person.id_person})}"
+                  style="display: inline;">
+                <button type="submit" class="btn btn-view" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <i class="fas fa-trash-alt"></i> Удалить
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
