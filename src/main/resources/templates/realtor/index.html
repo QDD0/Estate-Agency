@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Риелторы</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/realtor/main.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <ul class="menu-bar glass-menu">
+            <li><a th:href="@{/people}"><i></i>Покупатели</a></li>
+            <li><a th:href="@{/agency}"><i></i>Агентство</a></li>
+            <li><a th:href="@{/realtor}"><i></i>Риелторы</a></li>
+            <li><a th:href="@{/properties}"><i></i>Недвижимость</a></li>
+            <li><a th:href="@{/history}"><i></i>История продаж</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <h1 class="page-title">
+        <i class="fas fa-user-tie" style="margin-top: 7%"></i> Список риелторов
+    </h1>
+
+    <div class="header-section">
+        <form th:action="@{people/search}" method="get" class="search-form">
+            <input type="text"
+                   name="query"
+                   placeholder="Введите имя, фамилию или телефон..."
+                   class="search-input">
+            <button type="submit" class="search-btn">
+                <i class="fas fa-search"></i> Найти
+            </button>
+        </form>
+    </div>
+
+    <div class="realtors-grid" th:unless="${#lists.isEmpty(realtors)}">
+        <a th:each="realtor : ${realtors}"
+           th:href="@{/realtor/{id}(id=${realtor.id_realtor})}"
+           class="realtor-card">
+
+            <div class="realtor-name">
+                <i class="fas fa-user-tie icons"></i>
+                <span th:text="${realtor.person.lastname} + ' ' + ${realtor.person.firstname} + ' ' + ${realtor.person.surname}"></span>
+            </div>
+
+            <div class="realtor-info">
+                <div class="info-section person-section">
+                    <div class="section-title">
+                        <i class="fas fa-user icons"></i> Персональные данные
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">ФИО:</span>
+                        <span class="info-value">
+                                <span th:text="${realtor.person.lastname}"></span>
+                                <span th:text="${realtor.person.firstname}"></span>
+                                <span th:text="${realtor.person.surname}"></span>
+                            </span>
+                    </div>
+                </div>
+
+                <div class="info-section agency-section" th:if="${realtor.agency != null}">
+                    <div class="section-title">
+                        <i class="fas fa-building icons"></i> Агентство
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Название:</span>
+                        <span class="info-value agency-badge">
+                                <i class="fas fa-building icons"></i>
+                                <span th:text="${realtor.agency.name}"></span>
+                            </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Местоположение:</span>
+                        <span class="info-value location-badge">
+                                <i class="fas fa-map-marker-alt icons"></i>
+                                <span th:text="${realtor.agency.country} + ', ' + ${realtor.agency.city}"></span>
+                            </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="empty-state" th:if="${#lists.isEmpty(realtors)}">
+        <i class="fas fa-user-tie-slash empty-icon"></i>
+        <h2 class="empty-title">Риелторы не найдены</h2>
+        <p class="empty-text">Добавьте нового риелтора или измените параметры поиска</p>
+    </div>
+
+    <div class="pagination-container" th:unless="${#lists.isEmpty(realtors)}">
+        <div class="pagination">
+            <a th:if="${currentPage > 0}"
+               th:href="@{/realtor(page=${currentPage -1}, size=9)}"
+               title="Предыдущая страница">
+                <i class="fas fa-chevron-left"></i>
+                ⬅ Предыдущая
+            </a>
+
+            <span>
+                    <span class="page-current" th:text="${currentPage + 1}"></span> /
+                    <span class="page-total" th:text="${totalPages}"></span>
+                </span>
+
+            <a th:if="${currentPage + 1 < totalPages}"
+               th:href="@{/realtor(page=${currentPage + 1}, size=9)}"
+               title="Следующая страница">
+                Следующая ➡
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${realtors.person.surname + ' ' + realtors.person.firstname}">Информация о риелторе</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/realtor/realtor.css}">
+</head>
+<body>
+<div class="container">
+    <div class="detail-container">
+        <div class="detail-header">
+            <h1 class="detail-title">
+                <i class="fas fa-user-tie"></i>
+                <span th:text="${realtors.person.lastname + ' ' + realtors.person.firstname + ' ' + realtors.person.surname}"></span>
+            </h1>
+            <div class="detail-id">
+                ID риелтора: <span th:text="${realtors.id_realtor}"></span>
+            </div>
+        </div>
+
+        <div class="detail-content">
+            <div class="detail-grid">
+                <div class="detail-card">
+                    <div class="card-header">
+                        <i class="fas fa-user"></i> Персональные данные
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-user"></i> Фамилия
+                        </div>
+                        <div class="detail-text" th:text="${realtors.person.lastname}"></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-user"></i> Имя
+                        </div>
+                        <div class="detail-text" th:text="${realtors.person.firstname}"></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-user"></i> Отчество
+                        </div>
+                        <div class="detail-text" th:text="${realtors.person.surname}"></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-birthday-cake"></i> Дата рождения
+                        </div>
+                        <div class="detail-text"
+                             th:text="${#temporals.format(realtors.person.birthdate, 'dd.MM.yyyy')}"></div>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="card-header">
+                        <i class="fas fa-passport"></i> Паспортные данные
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-id-card"></i> Серия паспорта
+                        </div>
+                        <div class="detail-text" th:text="${realtors.person.passportseries}"></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-id-card"></i> Номер паспорта
+                        </div>
+                        <div class="detail-text" th:text="${realtors.person.passportnumber}"></div>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="card-header">
+                        <i class="fas fa-address-book"></i> Контактная информация
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-phone"></i> Телефон
+                        </div>
+                        <div class="detail-text" th:text="${realtors.person.phone}"></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-globe"></i> Страна
+                        </div>
+                        <div class="detail-text" th:text="${realtors.person.country}"></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-city"></i> Город
+                        </div>
+                        <div class="detail-text" th:text="${realtors.person.city}"></div>
+                    </div>
+                </div>
+
+                <div class="detail-card" th:if="${realtors.agency != null}">
+                    <div class="card-header">
+                        <i class="fas fa-building"></i> Агентство
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-building"></i> Название
+                        </div>
+                        <div class="detail-text" th:text="${realtors.agency.name}"></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-globe"></i> Страна
+                        </div>
+                        <div class="detail-text" th:text="${realtors.agency.country}"></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-city"></i> Город
+                        </div>
+                        <div class="detail-text" th:text="${realtors.agency.city}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <a th:href="@{/realtor/{id}/edit(id=${realtors.id_realtor})}" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Редактировать
+                    </a>
+
+                    <form method="post" th:action="@{/realtor/{id}/delete(id=${realtors.id_realtor})}"
+                          style="display: inline;">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Удалить
+                        </button>
+                    </form>
+                </div>
+
+                <a th:href="@{/realtor(page=${currentPage ?: 1})}" class="btn btn-back">
+                    <i class="fas fa-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
